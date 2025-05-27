@@ -274,7 +274,7 @@ def get_per_token_logprobs(model, input_ids, attention_mask, batch_size=512):
 def pad_and_stack(tensors: list, pad_value: int):
     max_len = max(x.size(1) for x in tensors)
     padded = [torch.nn.functional.pad(x, (0, max_len - x.size(1)), value=pad_value) for x in tensors]
-    return torch.cat(padded)
+    return torch.cat(padded, dim=0)
 
 def masked_mean(tensor, mask):
     masked_sum = (tensor * mask).sum()
