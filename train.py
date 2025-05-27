@@ -269,7 +269,7 @@ def get_per_token_logprobs(model, input_ids, attention_mask, batch_size=512):
             lse = torch.stack([torch.logsumexp(l, dim=-1) for l in logits])
             token_log_probs = token_logits - lse  # log_softmax = logits - log(sum(exp(logits)))
             per_token_logprobs.append(token_log_probs)
-        return torch.stack(per_token_logprobs)
+        return torch.cat(per_token_logprobs, dim=0)
 
 def pad_and_stack(tensors: list, pad_value: int):
     max_len = max(x.size(1) for x in tensors)
